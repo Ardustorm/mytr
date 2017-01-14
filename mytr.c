@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+#define MAXLENGTH 1000
 int genString( char str1[], char str2[] );
 int replace( char keys[], char values[] );
 void translate( char c , char keys[], char values[]);
-
+char unescape(char c);
 
 int main(int argc, char *argv[]) {
 
@@ -64,10 +64,10 @@ void translate( char c , char keys[], char values[]) {
  *  * Handle escape chars
  *  * Deal with stuff
  */
-int genString( char str1[], char str2[] ) {
+char[] genString( char str1[], char str2[] ) {
   /* Will generate equal length strings,by extending str2,
      if str2 is longer excess chars are ignored*/
-  printf("in replace:%c %s \t  %s\n",str1[1], str1,str2);
+  printf("in genSTring:%c %s \t  %s\n",str1[1], str1,str2);
 
 
   char c1;
@@ -75,11 +75,27 @@ int genString( char str1[], char str2[] ) {
   int i;
   for(i=0 ; str1[i] != '\0'; i++) {
     c1 = str1[i];
-    /* vvv   will change this to deal with cases */
     c2 = str2[i];
+    
     
     printf( "%c:%c  ", c1, c2 );
   }
   printf("\n");
   return -1;
+}
+
+
+char unescape( char c ) {
+
+  switch( c )
+    {
+    case 't':
+      return '\t';
+    case 'n':
+      return '\n';
+    case '\\':
+      return '\\';
+    default:
+      return c;
+    }
 }
