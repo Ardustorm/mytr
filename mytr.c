@@ -2,7 +2,10 @@
 #include <stdio.h>
 
 
-int replace( char str1[], char str2[] );
+int genString( char str1[], char str2[] );
+int replace( char keys[], char values[] );
+char translate( char c , char keys[], char values[]);
+
 
 int main(int argc, char *argv[]) {
 
@@ -15,21 +18,53 @@ int main(int argc, char *argv[]) {
     else
       printf("%s\n", argv[i]);
 
-  replace( argv[1], argv[2] );
+  genString( argv[1], argv[2] );
 
+  replace( argv[1], argv[2] );
   return 0;
 }
   
 
+int replace( char keys[], char values[] ) {
+  if(values[0] == '\0') {
+    /* deal with deletion */
+  }
+  else {
+    char c;
+    while( (c = getchar()) != EOF ) {
+      
+      putchar(translate(c, keys, values));
+    }
+  }
+  return 0;
+}
 
-int replace( char str1[], char str2[] ) {
+char translate( char c , char keys[], char values[]) {
+
+  int i;
+  for( i=0; (keys[i] != '\0') && (c != keys[i]); i++)
+    ;
+  if( keys[i] == '\0' )
+    return c;
+  else
+    return values[i];
+
+}
+
+int genString( char str1[], char str2[] ) {
 
   printf("in replace:%c %s \t  %s\n",str1[1], str1,str2);
 
-  char c =str1[0];
+
+  char c1;
+  char c2;
   int i;
-  for(i=0 ; c != '\0'; i++) {
-    c = str1[i];
-    printf( "pair: %c:%c  ", str1[i], str2[i] );
+  for(i=0 ; str1[i] != '\0'; i++) {
+    c1 = str1[i];
+    /* vvv   will change this to deal with cases */
+    c2 = str2[i];
+    
+    printf( "%c:%c  ", c1, c2 );
   }
+  printf("\n");
 }
