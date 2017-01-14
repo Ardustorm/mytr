@@ -1,58 +1,72 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 
 
 int genString( char str1[], char str2[] );
 int replace( char keys[], char values[] );
-char translate( char c , char keys[], char values[]);
+void translate( char c , char keys[], char values[]);
 
 
 int main(int argc, char *argv[]) {
 
-  /* This starts by assuming 2 groups */
-  
-  int i;
-  for(i=1 ; i <argc; i++)
-    if( argv[i][0] == '-')
-      printf("arg: %s\n", argv[i]);
-    else
-      printf("%s\n", argv[i]);
+  /* This block makes sure # of args is correct */
+  if(argc < 3) {
+    printf("mytr: missing operand\n");
+    exit(1);
+  }
+  if(argc > 3) {
+    printf("mytr: extra operand '%s'\n", argv[3]);
+    exit(1);
+  }
 
-  genString( argv[1], argv[2] );
 
-  replace( argv[1], argv[2] );
+  if( (argv[1][0] == '-') &&	/* check if 1st arg is '-d' */
+      (argv[1][1] == 'd') &&
+      (argv[1][2] == '\0')) {
+    printf("wez goingz to delet\n");
+    replace( argv[2], "\0");
+    
+  } else {
+    printf("trans\n");
+    replace( argv[1], argv[2]);
+  }
+  /* genString( argv[1], argv[2] ); */
+
+  /* replace( argv[1], argv[2] ); */
   return 0;
 }
   
 
 int replace( char keys[], char values[] ) {
-  if(values[0] == '\0') {
-    /* deal with deletion */
-  }
-  else {
-    char c;
-    while( (c = getchar()) != EOF ) {
-      
-      putchar(translate(c, keys, values));
-    }
+  char c;
+  while( (c = getchar()) != EOF ) {
+    translate(c, keys, values);
   }
   return 0;
 }
 
-char translate( char c , char keys[], char values[]) {
-
+void translate( char c , char keys[], char values[]) {
+  /* This function will seach for c in keys and 
+     replace w/ coresponding pair in value */
   int i;
   for( i=0; (keys[i] != '\0') && (c != keys[i]); i++)
     ;
-  if( keys[i] == '\0' )
-    return c;
-  else
-    return values[i];
-
+  if( keys[i] == '\0' )		/* Char not found */
+    putchar(c);
+  else if( values[0] != '\0' )	/* Char found, translation */
+    putchar(values[i]);
+  /* else: char is found for deletion, do nothing */
+  
 }
 
+/* TODO:
+ *  * Handle escape chars
+ *  * Deal with stuff
+ */
 int genString( char str1[], char str2[] ) {
-
+  /* Will generate equal length strings,by extending str2,
+     if str2 is longer excess chars are ignored*/
   printf("in replace:%c %s \t  %s\n",str1[1], str1,str2);
 
 
@@ -67,4 +81,5 @@ int genString( char str1[], char str2[] ) {
     printf( "%c:%c  ", c1, c2 );
   }
   printf("\n");
+  return -1;
 }
