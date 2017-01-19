@@ -1,14 +1,12 @@
+#include "mytr.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#define MAXLENGTH 1000
-int genString( char str1[], char str2[] );
-int replace( char keys[], char values[] );
-void translate( char c , char keys[], char values[]);
-char unescape(char c);
 
 int main(int argc, char *argv[]) {
+
+  char stuff[256];
+  
+  genHash(stuff, "abcdefghij", "1234567890");
+  printf("String:%c\n",stuff[106]);
 
   /* This block makes sure # of args is correct */
   if(argc < 3) {
@@ -24,78 +22,15 @@ int main(int argc, char *argv[]) {
   if( (argv[1][0] == '-') &&	/* check if 1st arg is '-d' */
       (argv[1][1] == 'd') &&
       (argv[1][2] == '\0')) {
-    printf("wez goingz to delet\n");
+    /* DELETION */
     replace( argv[2], "\0");
     
   } else {
+    /* TRANSLATION */
     printf("trans\n");
     replace( argv[1], argv[2]);
   }
-  /* genString( argv[1], argv[2] ); */
 
-  /* replace( argv[1], argv[2] ); */
   return 0;
 }
   
-
-int replace( char keys[], char values[] ) {
-  char c;
-  while( (c = getchar()) != EOF ) {
-    translate(c, keys, values);
-  }
-  return 0;
-}
-
-void translate( char c , char keys[], char values[]) {
-  /* This function will seach for c in keys and 
-     replace w/ coresponding pair in value */
-  int i;
-  for( i=0; (keys[i] != '\0') && (c != keys[i]); i++)
-    ;
-  if( keys[i] == '\0' )		/* Char not found */
-    putchar(c);
-  else if( values[0] != '\0' )	/* Char found, translation */
-    putchar(values[i]);
-  /* else: char is found for deletion, do nothing */
-  
-}
-
-/* TODO:
- *  * Handle escape chars
- *  * Deal with stuff
- */
-char[] genString( char str1[], char str2[] ) {
-  /* Will generate equal length strings,by extending str2,
-     if str2 is longer excess chars are ignored*/
-  printf("in genSTring:%c %s \t  %s\n",str1[1], str1,str2);
-
-
-  char c1;
-  char c2;
-  int i;
-  for(i=0 ; str1[i] != '\0'; i++) {
-    c1 = str1[i];
-    c2 = str2[i];
-    
-    
-    printf( "%c:%c  ", c1, c2 );
-  }
-  printf("\n");
-  return -1;
-}
-
-
-char unescape( char c ) {
-
-  switch( c )
-    {
-    case 't':
-      return '\t';
-    case 'n':
-      return '\n';
-    case '\\':
-      return '\\';
-    default:
-      return c;
-    }
-}
