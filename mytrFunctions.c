@@ -45,7 +45,7 @@ void genHash( char *table, char *str1, char *str2 ) {
      if str2 is longer excess chars are ignored, if str1 is
      longer the last char of str2 is repeated.
   */
-  int i;
+  int i,j;
 
   printf("in genSTring:\n");
 
@@ -56,12 +56,21 @@ void genHash( char *table, char *str1, char *str2 ) {
 
   /* Goes through str1 & str2 and replaces occurances of str 
      str1 in table with str2. ends when either pointer is null */
-  for(i=0; *(str1) && *(str2); *(table + *str1++) = *str2++)
-    ;
+  /* for( ; *(str1) && *(str2); *(table + *str1++) = *str2++) ; */
+
+  for(i=0, j=0; str1[i] && str2[j]; i++, j++) {
+    *(table + str1[i]) = str2[j];
+  }
+
+  
   /* TODO Make Sure String2 length is > 1 */
   /* Check if str1 is longer, fill with the last char from str2 */
-  for( ; *(str1) != '\0'; *(table + *str1++) = *(str2-1))
-    ;
+  /* for( ; *(str1) != '\0'; *(table + *str1++) = *(str2-1)) */
+  /*   ; */
+  for( ; str1[i]; i++) {
+
+    *(table + str1[i]) = str2[j-1];
+  }
 
 
 }
