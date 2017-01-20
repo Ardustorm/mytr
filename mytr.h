@@ -9,7 +9,7 @@
 
 #endif
 
-int genHash( char *table,char *str1, char *str2 );
+void genHash( char *table,char *str1, char *str2 );
 int replace( char keys[], char values[] );
-void translate( char c , char keys[], char values[]);
+void translate( char *table);
 char unescape(char c);

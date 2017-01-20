@@ -3,10 +3,10 @@
 
 int main(int argc, char *argv[]) {
 
-  char stuff[256];
+  char table[256];
   
-  genHash(stuff, "abcdefghij", "1234567890");
-  printf("String:%c\n",stuff[106]);
+
+  printf("String:%c\n",table[106]);
 
   /* This block makes sure # of args is correct */
   if(argc < 3) {
@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
   } else {
     /* TRANSLATION */
     printf("trans\n");
-    replace( argv[1], argv[2]);
+    genHash(table, argv[1], argv[2]);
+    translate(table);
   }
 
   return 0;
