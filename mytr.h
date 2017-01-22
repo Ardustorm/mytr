@@ -10,6 +10,7 @@
 #endif
 
 void genHash( char *table,char *str1, char *str2 );
-int replace( char keys[], char values[] );
-void translate( char *table);
+void delete(char *table,  char *str1 );
 char unescape(char c);
+
+int checkArgsDelete(int argc, char *argv[]);

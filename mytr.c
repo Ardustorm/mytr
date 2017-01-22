@@ -2,34 +2,18 @@
 
 
 int main(int argc, char *argv[]) {
-
   char table[256];
-  
+  char c;
 
-  printf("String:%c\n",table[106]);
-
-  /* This block makes sure # of args is correct */
-  if(argc < 3) {
-    printf("mytr: missing operand\n");
-    exit(1);
-  }
-  if(argc > 3) {
-    printf("mytr: extra operand '%s'\n", argv[3]);
-    exit(1);
-  }
-
-
-  if( (argv[1][0] == '-') &&	/* check if 1st arg is '-d' */
-      (argv[1][1] == 'd') &&
-      (argv[1][2] == '\0')) {
-    /* DELETION */
-    replace( argv[2], "\0");
+  if( checkArgsDelete(argc, argv) ) {
+    delete(table, argv[2]);
     
   } else {
-    /* TRANSLATION */
-    printf("trans\n");
+    /* TRANSLATE */
     genHash(table, argv[1], argv[2]);
-    translate(table);
+    while( (c = getchar()) != EOF ) {
+      putchar( *(table + c) );
+    }
   }
 
   return 0;
